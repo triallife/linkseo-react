@@ -3,9 +3,12 @@ import React, { useState } from 'react';
 const Menu = (props)=>{
   //props로 넘어온 속성: device
 
-  let modalOff = document.querySelector('.modal-off');
+  //모달 뒷배경 스위치
+  const [modalSwitch, setModalSwitch] = useState(false);
 
+  //모달 열기
   const openModal = (e)=>{
+    console.log(e.target);
     let data = e.target.parentNode.getAttribute('data-modal');
     let modal = document.querySelector(`${data}`);
     console.log(modal);
@@ -14,28 +17,81 @@ const Menu = (props)=>{
     if(modal.classList.contains('big-modal')){
       modal.style.display = 'flex';
     }
-    //modalOff.style.display = 'block';
-    //modalOff.style.opacity = 1;
+    setModalSwitch(true);
   }
 
+  //태블릿,모바일일때 앱 아이콘을 클릭해도 모달 열기
+  const openModalTP = (e)=>{
+    if(props.device != 'desktop'){
+      console.log(e.currentTarget);
+      let data = e.currentTarget.getAttribute('data-modal');
+      let modal = document.querySelector(data);
+      modal.setAttribute('open','open');
+      modal.classList.add('active');
+      setModalSwitch(true);
+      view();
+    }
+  }
+
+
+  //모달 닫기
   const closeModal = (e)=>{
     let data = e.target.getAttribute('data-modal');
     let modal = document.querySelector(data);
     modal.removeAttribute("open");
     if(modal.classList.contains('big-modal')){
-      //modal.style.display = 'none';
+      modal.style.display = 'none';
     }
-    //modalOff.style.opacity = 0;
-    //modalOff.style.display = 'none';
+    setModalSwitch(false);
+  }
+
+  //인트로 1 사라짐
+  const view = (e)=>{
+    let intro = document.querySelector('#intro')
+    intro.classList.remove('unview');
+  }
+
+  //modalOff 클릭시 모든 모달 닫기
+  const closeAll = (e)=>{
+    let modal =  document.querySelectorAll('.modal');
+    let bigModal = document.querySelectorAll('.big-modal');
+    modal.forEach(function(item){
+      item.removeAttribute("open");
+    })
+    bigModal.forEach(function(item){
+      item.removeAttribute("open");
+      item.style.display = 'none';
+    })
+    setModalSwitch(false);
+  }
+
+  //카테고리별 보기
+
+  let list = document.querySelectorAll('.content-group.list');
+  let tags = document.querySelectorAll('.content-group.tags');
+
+  const showCate = (e,whichObject)=>{
+    let idx = e.currentTarget.getAttribute('data-idx');
+    if(idx > 0){
+      whichObject.forEach(li=>{
+        li.style.display = 'none';
+      })
+      whichObject[idx - 1].style.display = 'block';
+    }else{
+      console.log('모두보기');
+      whichObject.forEach(li=>{
+        li.style.display = 'block';
+      })
+    }
   }
 
   return(
     <>
       <div className="menu">
         <div className="container d-flex">
-          <div className="app unview" data-modal="#modal1" id="intro">
+          <div className="app unview" data-modal="#modal1" id="intro" onClick={openModalTP}>
             <img src="img/mail.png" alt="mail icon"/>
-            <p className="app-name openModal" onClick={openModal}>intro</p>
+            <p className="app-name openModal" onClick={(e)=>{openModal(e);view(e);}}>intro</p>
           </div>
           <div className="app" data-modal="#modal2">
             <img src="img/memo.png" alt="mail icon"/>
@@ -76,7 +132,12 @@ const Menu = (props)=>{
         </div>
       </div>
 
-      <div className="modal-off"></div>
+      <div
+        className="modal-off"
+        style={{display: modalSwitch ? "block":"none", opacity: modalSwitch ? "1":"0"}}
+        onClick={closeAll}
+      >
+      </div>
 
       <dialog className="modal" id="modal1">
         <div className="modal-top">
@@ -113,6 +174,16 @@ const Menu = (props)=>{
                 <div className="notice-tablet-mobile">
                   <h5>태블릿, 모바일으로 이용중입니다</h5>
                   <p>앱 아이콘과 이름을 클릭하면 모달창에서 해당 내용을 확인할 수 있습니다.</p>
+                  <hr/>
+                  <h5>앱에서 확인 가능한 내용</h5>
+                  <p><span className="sbold">greetings:</span> 소개</p>
+                  <p><span className="sbold">link:</span> 가치관</p>
+                  <p><span className="sbold">front:</span> 개발관련 표시 색상 안내</p>
+                  <p><span className="sbold">design:</span> 디자인 관련 표시 색상 안내</p>
+                  <p><span className="sbold">likes:</span> 취미, 취향 등</p>
+                  <p><span className="sbold">about:</span> 교육, 학력, 경력, 연락처</p>
+                  <p><span className="sbold">contact:</span> 연락처</p>
+                  <p><span className="sbold">portfolio:</span> 포트폴리오</p>
                 </div>
               )
           }
@@ -184,23 +255,23 @@ const Menu = (props)=>{
         <div className="modal-left">
           <button className="close-big-Modal" data-modal="#modal7" onClick={closeModal}></button>
           <ul>
-            <li className="cate1">
+            <li className="cate1" data-idx="0" onClick={(e)=>{showCate(e,list)}}>
               <img src="img/docs.png" alt="docs icon"/>
               <p>모두보기</p>
             </li>
-            <li className="cate1">
+            <li className="cate1" data-idx="1" onClick={(e)=>{showCate(e,list)}}>
               <img src="img/docs.png" alt="docs icon"/>
               <p>교육</p>
             </li>
-            <li className="cate1">
+            <li className="cate1" data-idx="2" onClick={(e)=>{showCate(e,list)}}>
               <img src="img/docs.png" alt="docs icon"/>
               <p>학력</p>
             </li>
-            <li className="cate1">
+            <li className="cate1" data-idx="3" onClick={(e)=>{showCate(e,list)}}>
               <img src="img/docs.png" alt="docs icon"/>
               <p>경력</p>
             </li>
-            <li className="cate1">
+            <li className="cate1" data-idx="4" onClick={(e)=>{showCate(e,list)}}>
               <img src="img/docs.png" alt="docs icon"/>
               <p>연락</p>
             </li>
@@ -212,7 +283,7 @@ const Menu = (props)=>{
             <h3 className="cl">about me</h3>
           </div>
           <div className="modal-right-content">
-            <div className="content-group list">
+            <div className="content-group list" data-idx="1">
               <h4>교육</h4>
               <ul>
                 <li className="hover-blue">
@@ -221,7 +292,7 @@ const Menu = (props)=>{
                 </li>
               </ul>
             </div>
-            <div className="content-group list">
+            <div className="content-group list" data-idx="2">
               <h4>학력</h4>
               <ul>
                 <li className="hover-orange">
@@ -234,7 +305,7 @@ const Menu = (props)=>{
                 </li>
               </ul>
             </div>
-            <div className="content-group list">
+            <div className="content-group list" data-idx="3">
               <h4>경력</h4>
               <ul>
                 <li className="hover-orange">
@@ -251,12 +322,12 @@ const Menu = (props)=>{
                 </li>
               </ul>
             </div>
-            <div className="content-group list">
+            <div className="content-group list" data-idx="4">
               <div className="d-flex list">
                 <h4>연락</h4>
               </div>
               <ul>
-                <li className="">
+                <li>
                   <span className="desc">imlinkseo@gmail.com</span>
                 </li>
               </ul>
@@ -268,19 +339,19 @@ const Menu = (props)=>{
         <div className="modal-left">
           <button className="close-big-Modal" data-modal="#modal8" onClick={closeModal}></button>
           <ul>
-            <li className="cate2">
+            <li className="cate2" data-idx="0" onClick={(e)=>{showCate(e,tags)}}>
               <img src="img/docs.png" alt="docs icon"/>
               <p>모두보기</p>
             </li>
-            <li className="cate2">
+            <li className="cate2" data-idx="1" onClick={(e)=>{showCate(e,tags)}}>
               <img src="img/docs.png" alt="docs icon"/>
               <p>개발 언어</p>
             </li>
-            <li className="cate2">
+            <li className="cate2" data-idx="2" onClick={(e)=>{showCate(e,tags)}}>
               <img src="img/docs.png" alt="docs icon"/>
               <p>개발 기타</p>
             </li>
-            <li className="cate2">
+            <li className="cate2" data-idx="3" onClick={(e)=>{showCate(e,tags)}}>
               <img src="img/docs.png" alt="docs icon"/>
               <p>디자인 툴</p>
             </li>
@@ -292,7 +363,7 @@ const Menu = (props)=>{
             <h3 className="cl">skill</h3>
           </div>
           <div className="modal-right-content">
-            <div className="content-group tags">
+            <div className="content-group tags" data-idx="0">
               <h4 className="hover-blue">개발 언어</h4>
               <ul>
                 <li>
@@ -306,7 +377,7 @@ const Menu = (props)=>{
                 </li>
               </ul>
             </div>
-            <div className="content-group tags">
+            <div className="content-group tags" data-idx="1">
               <h4 className="hover-blue">개발 기타</h4>
               <ul>
                 <li>
@@ -319,7 +390,7 @@ const Menu = (props)=>{
                 </li>
               </ul>
             </div>
-            <div className="content-group tags">
+            <div className="content-group tags" data-idx="2">
               <h4 className="hover-orange">디자인 툴</h4>
               <ul>
                 <li>
@@ -335,7 +406,7 @@ const Menu = (props)=>{
           </div>
         </div>
       </dialog>
-
+      
       <dialog className="modal" id="modal9">
         <div className="modal-content.contact">
             <div className="frame">
@@ -348,7 +419,7 @@ const Menu = (props)=>{
                 </div>
                 <div className="contact-message right">
                   <p>이메일 주소를 클릭하면 작성을 시작합니다</p>
-                  <p className="closeModal" data-modal="#modal9">닫기</p>
+                  <p className="closeModal" data-modal="#modal9" onClick={closeModal}>닫기</p>
                 </div>
               </div>
             </div>
