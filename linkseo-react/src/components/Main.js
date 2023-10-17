@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState  } from 'react';
 import Menu from "./Menu";
 import Portfolio from "./Portfolio";
 
 const Main = () => {
 
+ 
   const [device, setDeVice] = useState('');
 
   //디바이스 체크
@@ -43,42 +44,43 @@ const Main = () => {
    useEffect(()=>{
     EiwafDevice.detect();
     setDeVice(EiwafDevice.type);
-    console.log(device);
-   });
+     console.log(device);
+   },[]);
 
    //먼지 사진 슬라이드
   let img = document.querySelector('.meonji img');
   let imgAmt = 8;
   let currentIdx = 0;
-  console.log(img);
 
-  const changeImg = (idx,img)=>{
-    img.setAttribute('src',`img/m/m${idx}.JPG`);
-    currentIdx = idx;
-  }
+  // const changeImg = (idx,imgsrc)=>{
+  //   imgsrc.setAttribute('src',`img/m/m${idx}.JPG`);
+  //   currentIdx = idx;
+  // }
 
-  const auto = ()=>{
-  let timer = setInterval(()=>{
-      let nextIdx = (currentIdx + 1) % imgAmt;
-      changeImg(nextIdx,img);
-    }, 3000);
-  }
+  // const auto = ()=>{
+  // let timer = setInterval(()=>{
+  //     let nextIdx = (currentIdx + 1) % imgAmt;
+  //     changeImg(nextIdx,img);
+  //   }, 3000);
+  // }
 
-  auto(currentIdx);
+  // auto(currentIdx);
 
   //포트폴리오 스크롤 이벤트
-  let porfolio = document.querySelector('.portfolio');
-  let ost = porfolio.offsetTop;
+  // let porfolio = document.querySelector('.portfolio');
+  // console.log(porfolio);
+  // let ost = porfolio.offsetTop;
+  // console.log(ost);
 
-  const scroll = (e)=>{
-    window.scrollTo({
-      left:0,
-      top: ost,
-      behavior: 'smooth'
-    })
-  }
-    
-   
+  // const scroll = (ost)=>{
+  //   window.scrollTo({
+  //     left:0,
+  //     top: ost,
+  //     behavior: 'smooth'
+  //   })
+  // }
+  const [scroll, setScroll] = useState(0);
+  console.log(scroll);
 
 
   return(
@@ -107,10 +109,10 @@ const Main = () => {
             </div>
           </div>
         </div>
-        <Portfolio/>
+        <Portfolio onScroll={(val)=>{setScroll(val)}} />
       </div>
 
-      <Menu device={device}/>
+      <Menu device={device} scroll={scroll} />
     </>
   )
 }

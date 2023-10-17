@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 
-const Menu = (props)=>{
+const Menu = (props) => {
+  console.log(props.scroll);
   //props로 넘어온 속성: device
-
+  const moveTo = () => {   
+    
+    window.scrollTo({ top: props.scroll, behavior: 'smooth' });
+  }
   //모달 뒷배경 스위치
   const [modalSwitch, setModalSwitch] = useState(false);
 
@@ -127,7 +131,7 @@ const Menu = (props)=>{
           </div>
           <div className="app">
             <img src="img/imac.png" alt="mail icon"/>
-            <p className="app-name" id="portfolio">portfolio</p>
+            <p className="app-name" id="portfolio" onClick={moveTo}>portfolio</p>
           </div>
         </div>
       </div>
