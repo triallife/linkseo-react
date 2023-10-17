@@ -45,6 +45,39 @@ const Main = () => {
     setDeVice(EiwafDevice.type);
     console.log(device);
    });
+
+   //먼지 사진 슬라이드
+  let img = document.querySelector('.meonji img');
+  let imgAmt = 8;
+  let currentIdx = 0;
+  console.log(img);
+
+  const changeImg = (idx,img)=>{
+    img.setAttribute('src',`img/m/m${idx}.JPG`);
+    currentIdx = idx;
+  }
+
+  const auto = ()=>{
+  let timer = setInterval(()=>{
+      let nextIdx = (currentIdx + 1) % imgAmt;
+      changeImg(nextIdx,img);
+    }, 3000);
+  }
+
+  auto(currentIdx);
+
+  //포트폴리오 스크롤 이벤트
+  let porfolio = document.querySelector('.portfolio');
+  let ost = porfolio.offsetTop;
+
+  const scroll = (e)=>{
+    window.scrollTo({
+      left:0,
+      top: ost,
+      behavior: 'smooth'
+    })
+  }
+    
    
 
 
@@ -69,7 +102,7 @@ const Main = () => {
             </div>
             <div className="notice meonji">
               <div className="img-container-meonji">
-                <img src="img/m/m1.JPG" alt="meonji1"/>
+                <img src="/img/m/m1.JPG" alt="고슴도치 사진"/>
               </div>
             </div>
           </div>
