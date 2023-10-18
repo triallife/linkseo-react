@@ -373,6 +373,8 @@ const Menu = (props) => {
                 <li>
                   <span className="tag sbold">HTML</span>
                   <span className="tag sbold">CSS</span>
+                  <span className="tag sbold">SCSS</span>
+                  <span className="tag sbold">SASS</span>
                   <span className="tag sbold">Javascript</span>
                   <span className="tag sbold">Jquery</span>
                   <span className="tag sbold">PHP</span>
