@@ -4,7 +4,6 @@ const Menu = (props) => {
   console.log(props.scroll);
   //props로 넘어온 속성: device
   const moveTo = () => {   
-    
     window.scrollTo({ top: props.scroll, behavior: 'smooth' });
   }
   //모달 뒷배경 스위치
@@ -375,6 +374,7 @@ const Menu = (props) => {
                   <span className="tag sbold">CSS</span>
                   <span className="tag sbold">SCSS</span>
                   <span className="tag sbold">SASS</span>
+                  <span className="tag sbold">LESS</span>
                   <span className="tag sbold">Javascript</span>
                   <span className="tag sbold">Jquery</span>
                   <span className="tag sbold">PHP</span>

@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from 'react';
 
 const Portfolio = ({onScroll}) => {
 
+  //스크롤 이벤트
   const myElement = useRef(null);
-
   useEffect(() => {
     // 컴포넌트가 마운트된 후에 offsetTop 값을 확인
     console.log(myElement.current.offsetTop);

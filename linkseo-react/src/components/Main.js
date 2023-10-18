@@ -58,7 +58,7 @@ const Main = () => {
   // }
 
   // const auto = ()=>{
-  // let timer = setInterval(()=>{
+  //   setInterval(()=>{
   //     let nextIdx = (currentIdx + 1) % imgAmt;
   //     changeImg(nextIdx,img);
   //   }, 3000);
@@ -67,18 +67,6 @@ const Main = () => {
   // auto(currentIdx);
 
   //포트폴리오 스크롤 이벤트
-  // let porfolio = document.querySelector('.portfolio');
-  // console.log(porfolio);
-  // let ost = porfolio.offsetTop;
-  // console.log(ost);
-
-  // const scroll = (ost)=>{
-  //   window.scrollTo({
-  //     left:0,
-  //     top: ost,
-  //     behavior: 'smooth'
-  //   })
-  // }
   const [scroll, setScroll] = useState(0);
   console.log(scroll);
 
