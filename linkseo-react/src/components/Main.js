@@ -1,4 +1,4 @@
-import React, { useEffect, useState  } from 'react';
+import React, { useEffect, useState, useRef  } from 'react';
 import Menu from "./Menu";
 import Portfolio from "./Portfolio";
 
@@ -6,6 +6,7 @@ const Main = () => {
 
  
   const [device, setDeVice] = useState('');
+  const img = useRef(null);
 
   //디바이스 체크
 
@@ -41,30 +42,34 @@ const Main = () => {
     }
    };
 
+  //먼지 사진 슬라이드
+  let imgAmt = 8;
+  let currentIdx = 0;
+
+  const changeImg = (idx,imgsrc)=>{
+    imgsrc.current.setAttribute('src',`img/m/m${idx}.JPG`);
+    currentIdx = idx;
+  }
+
    useEffect(()=>{
     EiwafDevice.detect();
     setDeVice(EiwafDevice.type);
      console.log(device);
+
+    const auto = ()=>{
+      setInterval(()=>{
+        let nextIdx = (currentIdx + 1) % imgAmt;
+        changeImg(nextIdx,img);
+      }, 3000);
+    }
+  
+    auto(currentIdx);
+
    },[]);
 
-   //먼지 사진 슬라이드
-  let img = document.querySelector('.meonji img');
-  let imgAmt = 8;
-  let currentIdx = 0;
 
-  // const changeImg = (idx,imgsrc)=>{
-  //   imgsrc.setAttribute('src',`img/m/m${idx}.JPG`);
-  //   currentIdx = idx;
-  // }
 
-  // const auto = ()=>{
-  //   setInterval(()=>{
-  //     let nextIdx = (currentIdx + 1) % imgAmt;
-  //     changeImg(nextIdx,img);
-  //   }, 3000);
-  // }
 
-  // auto(currentIdx);
 
   //포트폴리오 스크롤 이벤트
   const [scroll, setScroll] = useState(0);
@@ -92,7 +97,7 @@ const Main = () => {
             </div>
             <div className="notice meonji">
               <div className="img-container-meonji">
-                <img src="/img/m/m1.JPG" alt="고슴도치 사진"/>
+                <img src="/img/m/m1.JPG" alt="고슴도치 사진" ref={img}/>
               </div>
             </div>
           </div>
