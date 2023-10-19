@@ -468,6 +468,7 @@ dialog{
   display: flex;
   width: 100%;
   gap: 8px;
+  flex-wrap: wrap;
 }
 .content-group div{
   gap: 10px;
@@ -580,9 +581,9 @@ dialog{
     box-sizing: border-box;
   }
   .tag{
-  font-size: 11px;
-  border-radius: 3px;
-  padding: 3px 9px;
+    font-size: 11px;
+    border-radius: 3px;
+    padding: 3px 9px;
   }
   .notice{
     padding: 14px;

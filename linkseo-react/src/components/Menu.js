@@ -16,7 +16,7 @@ const Menu = (props) => {
     let modal = document.querySelector(`${data}`);
     console.log(modal);
     modal.setAttribute('open','open');
-    modal.classList.add('active');
+    // modal.classList.add('active');
     if(modal.classList.contains('big-modal')){
       modal.style.display = 'flex';
     }
@@ -30,7 +30,7 @@ const Menu = (props) => {
       let data = e.currentTarget.getAttribute('data-modal');
       let modal = document.querySelector(data);
       modal.setAttribute('open','open');
-      modal.classList.add('active');
+      // modal.classList.add('active');
       setModalSwitch(true);
       view();
     }
@@ -86,6 +86,68 @@ const Menu = (props) => {
         li.style.display = 'block';
       })
     }
+  }
+  
+  //드래그앤드롭
+
+  let app = document.querySelectorAll(".app img");
+  app.forEach(function(item){
+    item.ondragstart = function() {
+      return false;
+    };
+  })
+
+  let isDragging = false; // 드래그 중인지 여부를 나타내는 플래그
+
+  if(props.device === 'desktop'){ //데스크탑에서만 드래그앤드롭 실행
+    app.forEach(function(item){
+      item.onmousedown = function(event) {
+        let target = item.parentNode;
+        console.log(target);
+        // (1) absolute 속성과 zIndex 프로퍼티를 수정해 공이 제일 위에서 움직이기 위한 준비를 합니다.
+        target.style.position = 'absolute';
+        target.style.zIndex = 30;
+      
+        // 현재 위치한 부모에서 body로 직접 이동하여
+        // body를 기준으로 위치를 지정합니다.
+        document.querySelector('.main').append(target);
+      
+        // 공을 pageX, pageY 좌표 중앙에 위치하게 합니다.
+        function moveAt(pageX, pageY) {
+          target.style.left = pageX - target.offsetWidth / 2 + 'px';
+          target.style.top = pageY - target.offsetHeight / 2 + 'px';
+        }
+      
+        // 포인터 아래로 공을 이동시킵니다.
+        moveAt(event.pageX, event.pageY);
+      
+        function onMouseMove(event) {
+          moveAt(event.pageX, event.pageY);
+        }
+      
+        // (2) 드래그 중인지 여부를 설정하고, mousemove 이벤트를 등록합니다.
+        isDragging = true;
+        document.addEventListener('mousemove', onMouseMove);
+        // // (2) mousemove로 공을 움직입니다.
+        // document.addEventListener('mousemove', onMouseMove);
+      
+        // (3) 공을 드롭하고, 불필요한 핸들러를 제거합니다.
+        target.onmouseup = function() {
+          isDragging = false; // 드래그 종료
+          document.removeEventListener('mousemove', onMouseMove);
+          target.onmouseup = null;
+        };
+    
+        target.onclick = function(event) {
+          if (!isDragging) { // 드래그 중이 아닐 때에만 링크 이동
+            return true; // 링크 이동을 허용합니다.
+          } else {
+            event.preventDefault(); // 드래그 중일 때는 링크 이동을 막습니다.
+          }
+        };
+      
+      };
+    })
   }
 
   return(
@@ -160,7 +222,6 @@ const Menu = (props) => {
                 <h5>데스크탑으로 이용중입니다</h5>
                 <p>앱 아이콘을 드래그앤 드롭해서 배경화면에 앱을 배치하는 것처럼 화면에 배치할 수 있습니다.</p>
                 <p>앱 이름을 클릭하면 모달창에서 해당 내용을 확인할 수 있습니다.</p>
-                <hr/>
                 <h5>앱에서 확인 가능한 내용</h5>
                 <p><span className="sbold">greetings:</span> 소개</p>
                 <p><span className="sbold">link:</span> 가치관</p>
@@ -177,7 +238,6 @@ const Menu = (props) => {
                 <div className="notice-tablet-mobile">
                   <h5>태블릿, 모바일으로 이용중입니다</h5>
                   <p>앱 아이콘과 이름을 클릭하면 모달창에서 해당 내용을 확인할 수 있습니다.</p>
-                  <hr/>
                   <h5>앱에서 확인 가능한 내용</h5>
                   <p><span className="sbold">greetings:</span> 소개</p>
                   <p><span className="sbold">link:</span> 가치관</p>
@@ -200,8 +260,8 @@ const Menu = (props) => {
         <article className="modal-content">
           <img src="img/smile.png" alt="smile imoji"/>
           <h4>소개</h4>
-          <p>프론트엔드 개발자로써의 제  장점은 소통입니다. 프론트엔드 개발자는 화면 앞단을 통해서는 유저와 소통해야하고, 뒤로는 백엔드 개발자와 소통해야하는 직업이라고 생각합니다. 저는 디자이너라는 경력을 쌓는 과정에서 앞으로는 소비자, 홈페이지 유저와, 뒤로는 제작자, 공장, 동료 직원들과 소통해왔습니다. </p>
-          <p>이 경험을 살려 디자이너의 언어를 보다 잘 이해하고, 개발 팀프로젝트를 진행한 경험으로 동료들의 언어를 이해하여 중간지대의 역할을 훌륭히 수행해 내는 개발자가 되고자 합니다.</p>
+          <p>프론트엔드 개발자로써의 제  장점은 <span className='sbold pc-blue'>소통</span>입니다. 프론트엔드 개발자는 화면 앞단을 통해서는 유저와 소통해야하고, 뒤로는 백엔드 개발자와 소통해야하는 직업이라고 생각합니다. 저는 디자이너라는 경력을 쌓는 과정에서 앞으로는 소비자, 홈페이지 유저와, 뒤로는 제작자, 공장, 동료 직원들과 소통해왔습니다. </p>
+          <p>이 경험을 살려 디자이너의 언어를 보다 잘 이해하고, 개발 팀프로젝트를 진행한 경험으로 동료들의 언어를 이해하여 <span className='sbold pc-blue'>중간지대의 역할을 훌륭히 수행해 내는 개발자</span>가 되고자 합니다.</p>
         </article>
 	    </dialog>
       <dialog className="modal" id="modal3">
@@ -380,6 +440,7 @@ const Menu = (props) => {
                   <span className="tag sbold">PHP</span>
                   <span className="tag sbold">MySQL</span>
                   <span className="tag sbold">React</span>
+                  <span className="tag sbold">View</span>
                 </li>
               </ul>
             </div>

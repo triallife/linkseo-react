@@ -296,23 +296,11 @@ label{
 .imac{
   display: flex;
   justify-content: center;
-  /* padding-bottom: 500px; */
+  position: relative;
 }
 .imac-display{
-  position: absolute;
-  top:calc(43px*0.8);
-  left:calc(43px*0.8);
-  width: calc(100% - calc(calc(43px*0.8)*2));
-  object-fit: cover;
-  cursor: pointer;
-}
-.imac-vesel{
-  background-image: url('../public/img/imac-vesel.png');
-  background-repeat: no-repeat;
-  position: relative;
   width: calc(1099px*0.8);
   height: calc(954px*0.8);
-  background-size: cover;
 }
 .tooltip{
   opacity: 0;
@@ -398,6 +386,7 @@ label{
   width: 88px;
 }
 .information .tags{
+  align-items: flex-start;
   gap: 10px;
 }
 .information .links{
@@ -464,21 +453,9 @@ label{
     opacity: 0.5;
     transition: 0.3s ease-in;
   }
-  .imac-vesel {
-    background-image: url('../public/img/imac-vesel.png');
-    background-repeat: no-repeat;
-    position: relative;
+  .imac-display {
     width: 621px;
     height: 540px;
-    background-size: cover;
-  }
-  .imac-display {
-    position: absolute;
-    top: 25px;
-    left: 25px;
-    width: 572px;
-    object-fit: cover;
-    cursor: pointer;
   }
   .imac button {
     width: 35px;
@@ -526,21 +503,9 @@ label{
     opacity: 0.5;
     transition: 0.3s ease-in;
   }
-  .imac-vesel {
-    background-image: url('../public/img/imac-vesel.png');
-    background-repeat: no-repeat;
-    position: relative;
+  .imac-display {
     width: calc(621px * 0.8);
     height: calc(540px * 0.8);
-    background-size: cover;
-  }
-  .imac-display {
-    position: absolute;
-    top: calc(25px* 0.8);
-    left: calc(25px* 0.8);
-    width: calc(572px * 0.8);
-    object-fit: cover;
-    cursor: pointer;
   }
   .information {
     display: flex;
@@ -585,22 +550,12 @@ label{
     gap: 20px;
     justify-content: flex-start;
   }
-
-  .imac-vesel {
-    background-image: url('../public/img/imac-vesel.png');
-    background-repeat: no-repeat;
-    position: relative;
+  .imac-display {
     width: 340px;
     height: 295px;
-    background-size: cover;
   }
-  .imac-display {
-    position: absolute;
-    top: 13px;
-    left: 13px;
-    width: 314px;
-    object-fit: cover;
-    cursor: pointer;
+  .tooltip{
+    display: none;
   }
   .information {
     display: flex;
