@@ -97,7 +97,10 @@ const Main = () => {
             </div>
             <div className="notice meonji">
               <div className="img-container-meonji">
-                <img src="/img/m/m1.JPG" alt="고슴도치 사진" ref={img}/>
+                <img src="/img/m/m1.JPG" alt="고슴도치 사진" ref={img} />
+              </div>
+              <div className="tooltip">
+                <a href="/">cute!</a>
               </div>
             </div>
           </div>

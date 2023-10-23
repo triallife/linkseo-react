@@ -143,6 +143,13 @@
   align-items: center;
   justify-content: center;
   height: 340px;
+  position: relative;
+}
+.notice.meonji .tooltip{
+  position: absolute;
+}
+.notice.meonji:hover .tooltip{
+  opacity: 1;
 }
 .img-container-meonji {
   width: 97%;
