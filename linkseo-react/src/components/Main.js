@@ -54,7 +54,6 @@ const Main = () => {
    useEffect(()=>{
     EiwafDevice.detect();
     setDeVice(EiwafDevice.type);
-     console.log(device);
 
     const auto = ()=>{
       setInterval(()=>{
@@ -62,19 +61,11 @@ const Main = () => {
         changeImg(nextIdx,img);
       }, 3000);
     }
-  
     auto(currentIdx);
-
    },[]);
-
-
-
-
 
   //포트폴리오 스크롤 이벤트
   const [scroll, setScroll] = useState(0);
-  console.log(scroll);
-
 
   return(
     <>

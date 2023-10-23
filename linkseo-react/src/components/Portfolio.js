@@ -15,7 +15,7 @@ const Portfolio = ({onScroll}) => {
     if (docSnap.exists()) {
       setDocData(docSnap.data());
     } else {
-      console.log("No such document!");
+      
     }
   }
 
@@ -34,7 +34,6 @@ const Portfolio = ({onScroll}) => {
   
   //next 버튼을 클릭하면 할일
   const next = (e) => {
-    console.log('next실행');
     if (currentIdx < 5) {
       setCurrentIdx(currentIdx + 1);
     }
@@ -42,10 +41,8 @@ const Portfolio = ({onScroll}) => {
 
   //prev 버튼을 클릭하면 할일
   const prev = (e) => {
-    console.log('prev실행');
     if (currentIdx > 1) {
       setCurrentIdx(currentIdx - 1);
-      console.log(currentIdx);
     }
   }
 

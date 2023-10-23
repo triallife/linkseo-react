@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 const Menu = (props) => {
-  console.log(props.scroll);
   //props로 넘어온 속성: device
   //포트폴리오 스크롤 이벤트
   const moveTo = () => {   
@@ -12,13 +11,10 @@ const Menu = (props) => {
 
   //모달 열기
   const openModal = (e)=>{
-    console.log(e.target);
     let data = e.target.parentNode.getAttribute('data-modal');
     let modal = document.querySelector(`${data}`);
-    console.log(modal);
     modal.setAttribute('open', 'open');
     let ost = modal.offsetTop - 500;
-    console.log(ost);
     window.scrollTo({ top: ost, behavior: 'smooth' });
     if(modal.classList.contains('big-modal')){
       modal.style.display = 'flex';
@@ -29,7 +25,6 @@ const Menu = (props) => {
   //태블릿,모바일일때 앱 아이콘을 클릭해도 모달 열기
   const openModalTP = (e)=>{
     if(props.device != 'desktop'){
-      console.log(e.currentTarget);
       let data = e.currentTarget.getAttribute('data-modal');
       let modal = document.querySelector(data);
       modal.setAttribute('open','open');
@@ -84,7 +79,6 @@ const Menu = (props) => {
       })
       whichObject[idx - 1].style.display = 'block';
     }else{
-      console.log('모두보기');
       whichObject.forEach(li=>{
         li.style.display = 'block';
       })
@@ -106,7 +100,6 @@ const Menu = (props) => {
     app.forEach(function(item){
       item.onmousedown = function(event) {
         let target = item.parentNode;
-        console.log(target);
         target.style.position = 'absolute';
         target.style.zIndex = 30;
 
