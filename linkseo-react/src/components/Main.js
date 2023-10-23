@@ -47,7 +47,7 @@ const Main = () => {
   let currentIdx = 0;
 
   const changeImg = (idx,imgsrc)=>{
-    imgsrc.current.setAttribute('src',`img/m/m${idx}.JPG`);
+    imgsrc.current.setAttribute('src',`/img/m/m${idx}.JPG`);
     currentIdx = idx;
   }
 
