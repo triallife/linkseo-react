@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 const Menu = (props) => {
   console.log(props.scroll);
   //props로 넘어온 속성: device
+  //포트폴리오 스크롤 이벤트
   const moveTo = () => {   
     window.scrollTo({ top: props.scroll, behavior: 'smooth' });
   }
@@ -15,8 +16,10 @@ const Menu = (props) => {
     let data = e.target.parentNode.getAttribute('data-modal');
     let modal = document.querySelector(`${data}`);
     console.log(modal);
-    modal.setAttribute('open','open');
-    // modal.classList.add('active');
+    modal.setAttribute('open', 'open');
+    let ost = modal.offsetTop - 500;
+    console.log(ost);
+    window.scrollTo({ top: ost, behavior: 'smooth' });
     if(modal.classList.contains('big-modal')){
       modal.style.display = 'flex';
     }
@@ -104,34 +107,25 @@ const Menu = (props) => {
       item.onmousedown = function(event) {
         let target = item.parentNode;
         console.log(target);
-        // (1) absolute 속성과 zIndex 프로퍼티를 수정해 공이 제일 위에서 움직이기 위한 준비를 합니다.
         target.style.position = 'absolute';
         target.style.zIndex = 30;
-      
-        // 현재 위치한 부모에서 body로 직접 이동하여
-        // body를 기준으로 위치를 지정합니다.
+
         document.querySelector('.main').append(target);
       
-        // 공을 pageX, pageY 좌표 중앙에 위치하게 합니다.
         function moveAt(pageX, pageY) {
           target.style.left = pageX - target.offsetWidth / 2 + 'px';
           target.style.top = pageY - target.offsetHeight / 2 + 'px';
         }
       
-        // 포인터 아래로 공을 이동시킵니다.
         moveAt(event.pageX, event.pageY);
       
         function onMouseMove(event) {
           moveAt(event.pageX, event.pageY);
         }
       
-        // (2) 드래그 중인지 여부를 설정하고, mousemove 이벤트를 등록합니다.
         isDragging = true;
         document.addEventListener('mousemove', onMouseMove);
-        // // (2) mousemove로 공을 움직입니다.
-        // document.addEventListener('mousemove', onMouseMove);
-      
-        // (3) 공을 드롭하고, 불필요한 핸들러를 제거합니다.
+
         target.onmouseup = function() {
           isDragging = false; // 드래그 종료
           document.removeEventListener('mousemove', onMouseMove);
@@ -140,9 +134,9 @@ const Menu = (props) => {
     
         target.onclick = function(event) {
           if (!isDragging) { // 드래그 중이 아닐 때에만 링크 이동
-            return true; // 링크 이동을 허용합니다.
+            return true; // 링크 이동을 허용
           } else {
-            event.preventDefault(); // 드래그 중일 때는 링크 이동을 막습니다.
+            event.preventDefault(); // 드래그 중일 때는 링크 이동 불가
           }
         };
       
@@ -236,7 +230,7 @@ const Menu = (props) => {
             :
               (
                 <div className="notice-tablet-mobile">
-                  <h5>태블릿, 모바일으로 이용중입니다</h5>
+                  <h5>태블릿 혹은 모바일로 이용중입니다</h5>
                   <p>앱 아이콘과 이름을 클릭하면 모달창에서 해당 내용을 확인할 수 있습니다.</p>
                   <h5>앱에서 확인 가능한 내용</h5>
                   <p><span className="sbold">greetings:</span> 소개</p>

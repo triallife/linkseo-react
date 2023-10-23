@@ -4,13 +4,8 @@ import db from '../firebase';
 
 const Portfolio = ({onScroll}) => {
 
-  //스크롤 이벤트
-  const myElement = useRef(null);
-
   //하나의 문서 가져오기
   const [currentIdx, setCurrentIdx] = useState(1);
-  const [nextIdx, setNextIdx] = useState(currentIdx + 1);
-  const [prevIdx, setPrevIdx] = useState(currentIdx + 1);
   const [docData, setDocData] = useState({});
 
   const getData = async() => {
@@ -36,16 +31,13 @@ const Portfolio = ({onScroll}) => {
     setIdArr(newArr);
   }
   
+  
   //next 버튼을 클릭하면 할일
   const next = (e) => {
     console.log('next실행');
     if (currentIdx < 5) {
       setCurrentIdx(currentIdx + 1);
-      setNextIdx(currentIdx + 1);
-    } else {
-      e.currentTarget.style.opacity = 0.2;
     }
-    
   }
 
   //prev 버튼을 클릭하면 할일
@@ -54,21 +46,38 @@ const Portfolio = ({onScroll}) => {
     if (currentIdx > 1) {
       setCurrentIdx(currentIdx - 1);
       console.log(currentIdx);
-    } else {
-      e.currentTarget.style.opacity = 0.2;
     }
-    
   }
+
+  const btnOff = (btn) => {
+    btn.current.style.opacity = 0.2;
+  }
+  const btnOn = (btn) => {
+    btn.current.style.opacity = 1;
+  }
+
+  const prevBtn = useRef(null);
+  const nextBtn = useRef(null);
+
+  //스크롤 이벤트
+  const myElement = useRef(null);
 
   useEffect(() => {
     // 컴포넌트가 마운트된 후에 offsetTop 값을 확인
-    console.log(myElement.current.offsetTop);
     onScroll(myElement.current.offsetTop);
     getData();
     getIdArr();
+    if (currentIdx === 1) {
+      btnOff(prevBtn);
+    } else {
+      btnOn(prevBtn);
+    }
+    if (currentIdx === 5) {
+      btnOff(nextBtn);
+    } else {
+      btnOn(nextBtn);
+    }
   }, [currentIdx]);
-  
-  console.log(docData);
 
 
 
@@ -81,21 +90,18 @@ const Portfolio = ({onScroll}) => {
       <p className="desc">기획, 디자인, 구현까지 모두 참여한 포트폴리오입니다.</p>
     </div>
     <div className="imac">
-      {/* <div className="imac-vesel"> */}
         <a href={docData.link} target='_blank'>
-          {/* <img src={`img/imac-display-${currentIdx}p.png`} alt="display" className="imac-display"/> */}
           <img src={`img/portfolio-${currentIdx}.png`} alt="display" className="imac-display"/>
         </a>
         <div className="tooltip">
           <a href="/">화면을 클릭해서 홈페이지로 이동하기</a>
         </div>
-        <button type="button" className="prev" onClick={prev}>
+        <button type="button" className="prev" onClick={prev} ref={prevBtn}>
           <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
         </button>
-        <button type="button" className="next" onClick={next}>
+        <button type="button" className="next" onClick={next} ref={nextBtn}>
           <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
         </button>
-      {/* </div> */}
     </div>
     <div className="information">
       <ul>
